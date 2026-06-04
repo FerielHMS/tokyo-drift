@@ -60,14 +60,16 @@ function initMusicPlayer() {
 
     }, { once: true });
 
-    musicPlayer.addEventListener("timeupdate", function () {
-        saveMusicState();
-    });
+   musicPlayer.addEventListener("timeupdate", function () {
+    saveMusicState();
+});
 
-    musicPlayer.addEventListener("ended", function () {
-        nextSong();
-    });
+musicPlayer.addEventListener("pause", saveMusicState);
+musicPlayer.addEventListener("play", saveMusicState);
 
+musicPlayer.addEventListener("ended", function () {
+    nextSong();
+});
     setupMusicButtons();
     updatePlayButton();
 }
@@ -85,10 +87,15 @@ function loadSong(index) {
 
 function saveMusicState() {
     if (!musicPlayer) return;
-    var state = { currentSongIndex: currentSongIndex, isPlaying: isMusicPlaying, currentTime: musicPlayer.currentTime || 0 };
+
+    var state = {
+        currentSongIndex: currentSongIndex,
+        isPlaying: !musicPlayer.paused,
+        currentTime: musicPlayer.currentTime || 0
+    };
+
     sessionStorage.setItem("musicState", JSON.stringify(state));
 }
-
 function toggleMusic() {
     if (!musicPlayer) return;
     if (isMusicPlaying) {

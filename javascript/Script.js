@@ -88,10 +88,9 @@ function saveMusicState() {
     if (!musicPlayer) return;
 
     var state = {
-        currentSongIndex: currentSongIndex,
-        isPlaying: isMusicPlaying,
-        currentTime: musicPlayer.currentTime || 0
-    };
+    currentSongIndex: currentSongIndex,
+    isPlaying: isMusicPlaying
+};
 
     console.log("Saved state:", state);
 

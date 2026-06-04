@@ -24,24 +24,53 @@ var musicPlayer = null;
 var currentSongIndex = 0;
 var isMusicPlaying = false;
 
-function initMusicPlayer() {
+ function initMusicPlayer() {
     musicPlayer = document.getElementById("bgMusic");
     if (!musicPlayer) return;
+
     var savedState = sessionStorage.getItem("musicState");
+    var savedTime = 0;
+
     if (savedState) {
         var state = JSON.parse(savedState);
-        currentSongIndex = state.currentSongIndex;
-        isMusicPlaying = state.isPlaying;
-        musicPlayer.currentTime = state.currentTime || 0;
+        currentSongIndex = state.currentSongIndex || 0;
+        isMusicPlaying = state.isPlaying || false;
+        savedTime = state.currentTime || 0;
     }
+
     loadSong(currentSongIndex);
+
     musicPlayer.volume = 0.3;
-    if (isMusicPlaying) {
-        musicPlayer.play()["catch"](function(e) { isMusicPlaying = false; updatePlayButton(); });
-    }
-    musicPlayer.addEventListener("timeupdate", function() { saveMusicState(); });
-    musicPlayer.addEventListener("ended", function() { nextSong(); });
+
+    musicPlayer.addEventListener("loadedmetadata", function () {
+
+        if (savedTime > 0) {
+            musicPlayer.currentTime = savedTime;
+        }
+
+        if (isMusicPlaying) {
+            musicPlayer.play()
+                .then(function () {
+                    updatePlayButton();
+                })
+                .catch(function () {
+                    isMusicPlaying = false;
+                    updatePlayButton();
+                });
+        }
+
+    }, { once: true });
+
+    musicPlayer.addEventListener("timeupdate", function () {
+        saveMusicState();
+    });
+
+    musicPlayer.addEventListener("ended", function () {
+        nextSong();
+    });
+
     setupMusicButtons();
+    updatePlayButton();
 }
 
 function loadSong(index) {

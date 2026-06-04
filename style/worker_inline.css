@@ -105,3 +105,85 @@
     }
 
 }
+@media (max-width: 768px) {
+
+    .worker-container{
+        margin-top: 80px;
+        padding: 10px;
+    }
+
+    .worker-header{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        align-items: center;
+        padding: 15px;
+    }
+
+    .worker-header h1{
+        font-size: 1.8rem;
+        line-height: 1.2;
+    }
+
+    .worker-header > div{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .logout-btn{
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .worker-stats{
+        display: grid;
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+
+    .stat-card{
+        width: 100%;
+        max-width: none;
+        padding: 15px;
+    }
+
+    .stat-card .stat-value{
+        font-size: 2rem;
+    }
+
+    .worker-section h2{
+        font-size: 1rem;
+        text-align: center;
+        line-height: 1.4;
+    }
+
+    .discount-badge{
+        display: block;
+        margin-top: 10px;
+    }
+
+    .table-responsive{
+        overflow-x: auto;
+    }
+
+    .worker-table,
+    .orders-table{
+        min-width: 700px;
+    }
+
+    .back-btn{
+        top: 10px;
+        left: 10px;
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+
+    .music-player{
+        display: none;
+    }
+
+}
